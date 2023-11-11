@@ -6,7 +6,6 @@ if (!$connection) {
     die('Связь не установлена' . mysqli_connect_error()) ;
 }
 
-
 $calculate = '';
 
 if (isset($_REQUEST['valueX'])) {
@@ -120,8 +119,6 @@ while ($resultRow = mysqli_fetch_assoc($query)) {
 
     <?php } ?>
 
-
-
         <div>
             <span>Последние результаты: </span>
             <span>
@@ -132,8 +129,6 @@ while ($resultRow = mysqli_fetch_assoc($query)) {
            <span>  <?php echo $result['result_expression']?>
                 <?php }?></span>
         </div>
-
-
 
 </body>
 </html>
