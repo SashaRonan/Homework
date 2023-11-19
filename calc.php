@@ -3,132 +3,106 @@
 $connection = mysqli_connect('localhost', 'root', '', 'calc');
 
 if (!$connection) {
-    die('Связь не установлена' . mysqli_connect_error()) ;
+    die('Связь не установлена :' . mysqli_connect_error());
 }
-
-$calculate = '';
 
 if (isset($_REQUEST['valueX'])) {
     $x = $_REQUEST['valueX'];
 }
 
- if (isset($_REQUEST['valueY'])) {
-     $y = $_REQUEST['valueY'];
- }
-
- if (isset($_REQUEST['selectOption'])) {
-     $operation = $_REQUEST['selectOption'];
- }
-
-
-     if (!empty($x) && !empty($y)) {
-
-         if ($operation == "+") {
-             $calculate = $x + $y;
-         } elseif ($operation == "-") {
-             $calculate = $x - $y;
-         } elseif ($operation == "*") {
-             $calculate = $x * $y;
-         } elseif ($operation == ":") {
-             if ($y != 0) {
-                 $calculate = $x / $y;
-             } else {
-                 $error = "Деление на ноль невозможно";
-             }
-         }
-         mysqli_query(   $connection, "INSERT INTO results (operand_1, `operation`, operand_2, resault, `result_expression`) VALUES (" . $x . ", '" . $operation . "', " . $y . ", " . $calculate . ", '" . $x . $operation . $y . "=" . $calculate . "');"   );
-
-     }
-
-
-if (!empty($_REQUEST["calcButton"]) && (empty($_REQUEST["valueX"]) || empty($_REQUEST["valueY"])) ) {
-    $error = "Введите все  необходимые значения";
+if (isset($_REQUEST['valueY'])) {
+    $y = $_REQUEST['valueY'];
 }
 
-$query = mysqli_query($connection, "SELECT * FROM	`results` ORDER BY `id` DESC LIMIT 7");
-
-$resultList =[];
-
-while ($resultRow = mysqli_fetch_assoc($query)) {
-    $resultList[] = $resultRow;
+if (isset($_REQUEST['selectOption'])) {
+    $operation = $_REQUEST['selectOption'];
 }
+
+$resultArray = [
+    "operand1" => [],
+    "operand2" => [],
+    "operation" => [],
+    "result" => [],
+    "resultExpression" => []
+];
+
+$calculate = '';
+
+if (!empty($x) && !empty($y)) {
+    if ($operation == "+") {
+        $calculate = $x + $y;
+    } elseif ($operation == "-") {
+        $calculate = $x - $y;
+    } elseif ($operation == "*") {
+        $calculate = $x * $y;
+    } elseif ($operation == ":") {
+        if ($y != 0) {
+            $calculate = $x / $y;
+        } else {
+            $error = "Деление на ноль невозможно";
+        }
+    }
+
+    mysqli_query($connection, "INSERT INTO results (operand_1, `operation`, operand_2, resault, `result_expression`) VALUES (" . $x . ", '" . $operation . "', " . $y . ", " . $calculate . ", '" . $x . $operation . $y . "=" . $calculate . "');");
+}
+
+
+
+//$queryLastSevenResults = "SELECT `operand_1`,`operation`,`operand_2`,`resault`, `result_expression`  FROM calc ORDER BY `id` DESC LIMIT 7";
+//$resultConnectionLastSeven = mysqli_query($connection, $queryLastSevenResults) or die("Ошибка: " . mysqli_error($connection));
+//
+//echo '<pre>';
+//print_r($queryLastSevenResults);
+//echo '</pre>';
+//echo '<pre>';
+//print_r($resultConnectionLastSeven);
+//echo '</pre>'
+
+//if ($resultConnectionLastSeven) {
+//
+//    $numberOfRows = mysqli_num_rows($resultConnectionLastSeven);
+//
+//    while ($numberOfRows = mysqli_fetch_assoc($resultConnectionLastSeven)) {
+//        $resultArray["operand1"][] = $numberOfRows['operand_1'];
+//        $resultArray["operand2"][] = $numberOfRows['operand_2'];
+//        $resultArray["operation"][] = $numberOfRows['operation'];
+//        $resultArray["result"][] = $numberOfRows['result'];
+//        $resultArray["resultExpression"][] = $numberOfRows['result_expression'];
+//    }
+//};
+//
+//$resultArray["operand1"][] = join(',', $resultArray["operand1"][]);
+//$resultArray["operand2"][] = join(',', $resultArray["operand2"][]);
+//$resultArray["operation"][] = join(',', $resultArray["operation"][]);
+//$resultArray["result"][] = join(',', $resultArray["result"][]);
+//$resultArray["resultExpression"][] = join(',', $resultArray["resultExpression"][]);
+//
+//
+//echo json_encode($resultArray);
+
+//array_push($resultArray["operand1"], $x);
+//array_push($resultArray["operand2"], $y);
+//array_push($resultArray["operation"], $operation);
+//array_push($resultArray["result"], $calculate);
+//array_push($resultArray["resultExpression"], $x);
+
+
+//     print_r($calculate);
+
+//if (!empty($_REQUEST["calcButton"]) && (empty($_REQUEST["valueX"]) || empty($_REQUEST["valueY"])) ) {
+//    $error = "Введите все  необходимые значения";
+//}
+//
+//$query = mysqli_query($connection, "SELECT * FROM	`results` ORDER BY `id` DESC LIMIT 7");
+//
+//$resultList =[];
+//
+//while ($resultRow = mysqli_fetch_assoc($query)) {
+//    $resultList[] = $resultRow;
+//}
 //echo '<pre>';
 //print_r($resultList);
 //echo '</pre>';
 
 ?>
 
-<!doctype html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
-</head>
-<body>
-
-    <form method="POST">
-
-        <div>
-            <label> <input type="text" name="valueX"> </label>
-        </div>
-
-        <div>
-            <label>
-                <select id="selOption" name="selectOption">
-                    <option value="+">Сложение (+)</option>
-                    <option value="-">Вычитание (-)</option>
-                    <option value="*">Умножение (*)</option>
-                    <option value=":">Деление (/)</option>
-                </select>
-            </label>
-        </div>
-
-        <div>
-            <label><input type="text" name="valueY"></label>
-        </div>
-
-        <div>
-            <input type="submit" value="Вычислить" name="calcButton" onclick="">
-        </div>
-
-    </form>
-
-    <?php if (!empty($error)) { ?>
-        <div>
-            <span>Ошибка: </span>
-            <span>
-                <?php
-                echo $error;
-                ?>
-            </span>
-        </div>
-    <?php } ?>
-
-    <?php if (!empty($calculate)) { ?>
-        <div>
-            <span>Результат: </span>
-            <span>
-                <?php
-                echo $calculate;
-                ?>
-            </span>
-        </div>
-
-    <?php } ?>
-
-        <div>
-            <span>Последние результаты: </span>
-            <span>
-                <?php foreach ($resultList as $result) {?>
-        <span>
-           <hr> [<?php echo $result['created_at']; ?>]
-        </span>
-           <span>  <?php echo $result['result_expression']?>
-                <?php }?></span>
-        </div>
-
-</body>
-</html>
