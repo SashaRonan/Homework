@@ -17,15 +17,15 @@ function calculate() {
         .then (response => response.json())
         .then(jsonObject => {
             //Показываем ответ
-            console.dir(jsonObject);
+            console.log(jsonObject);
 
-        //
-        //     let i;
-        //     let resultList = "";
-        //
-        //     for (i = 0; i < jsonObject.resultArray.length; i++) {
-        //         resultList = resultList + jsonObject.resultArray[i].resultExpression + "; "
-        //     }
+
+            let i;
+            let resultList = "";
+
+            for (i = 0; i < jsonObject.resultExpression.length; i++) {
+                resultList = resultList + jsonObject.resultExpression[i] + "; "
+            }
             let resultField = document.querySelector(".lastResult");
             resultField.innerHTML = "Последние результаты: " + jsonObject;
         })

@@ -22,14 +22,14 @@ $resultArray = [
     "operand1" => [],
     "operand2" => [],
     "operation" => [],
-    "result" => [],
+    "resultOperation" => [],
     "resultExpression" => []
 ];
 
 $calculate = '';
 
 if (!empty($x) && !empty($y)) {
-    if ($operation == "+") {
+    if ($operation == "add") {
         $calculate = $x + $y;
     } elseif ($operation == "-") {
         $calculate = $x - $y;
@@ -48,61 +48,42 @@ if (!empty($x) && !empty($y)) {
 
 
 
-//$queryLastSevenResults = "SELECT `operand_1`,`operation`,`operand_2`,`resault`, `result_expression`  FROM calc ORDER BY `id` DESC LIMIT 7";
-//$resultConnectionLastSeven = mysqli_query($connection, $queryLastSevenResults) or die("Ошибка: " . mysqli_error($connection));
-//
+$queryLastSevenResults = "SELECT `operand_1`,`operation`,`operand_2`,`resault`, `result_expression`  FROM results ORDER BY `id` DESC LIMIT 7";
+$resultConnectionLastSeven = mysqli_query($connection, $queryLastSevenResults) or die("Ошибка: " . mysqli_error($connection));
+
 //echo '<pre>';
 //print_r($queryLastSevenResults);
 //echo '</pre>';
 //echo '<pre>';
 //print_r($resultConnectionLastSeven);
-//echo '</pre>'
-
-//if ($resultConnectionLastSeven) {
-//
-//    $numberOfRows = mysqli_num_rows($resultConnectionLastSeven);
-//
-//    while ($numberOfRows = mysqli_fetch_assoc($resultConnectionLastSeven)) {
-//        $resultArray["operand1"][] = $numberOfRows['operand_1'];
-//        $resultArray["operand2"][] = $numberOfRows['operand_2'];
-//        $resultArray["operation"][] = $numberOfRows['operation'];
-//        $resultArray["result"][] = $numberOfRows['result'];
-//        $resultArray["resultExpression"][] = $numberOfRows['result_expression'];
-//    }
-//};
-//
-//$resultArray["operand1"][] = join(',', $resultArray["operand1"][]);
-//$resultArray["operand2"][] = join(',', $resultArray["operand2"][]);
-//$resultArray["operation"][] = join(',', $resultArray["operation"][]);
-//$resultArray["result"][] = join(',', $resultArray["result"][]);
-//$resultArray["resultExpression"][] = join(',', $resultArray["resultExpression"][]);
-//
-//
-//echo json_encode($resultArray);
-
-//array_push($resultArray["operand1"], $x);
-//array_push($resultArray["operand2"], $y);
-//array_push($resultArray["operation"], $operation);
-//array_push($resultArray["result"], $calculate);
-//array_push($resultArray["resultExpression"], $x);
-
-
-//     print_r($calculate);
-
-//if (!empty($_REQUEST["calcButton"]) && (empty($_REQUEST["valueX"]) || empty($_REQUEST["valueY"])) ) {
-//    $error = "Введите все  необходимые значения";
-//}
-//
-//$query = mysqli_query($connection, "SELECT * FROM	`results` ORDER BY `id` DESC LIMIT 7");
-//
-//$resultList =[];
-//
-//while ($resultRow = mysqli_fetch_assoc($query)) {
-//    $resultList[] = $resultRow;
-//}
-//echo '<pre>';
-//print_r($resultList);
 //echo '</pre>';
+
+if ($resultConnectionLastSeven) {
+
+    $numberOfRows = mysqli_num_rows($resultConnectionLastSeven);
+
+    while ($numberOfRows = mysqli_fetch_assoc($resultConnectionLastSeven)) {
+        $resultArray["operand1"][] = $numberOfRows['operand_1'];
+        $resultArray["operand2"][] = $numberOfRows['operand_2'];
+        $resultArray["operation"][] = $numberOfRows['operation'];
+        $resultArray["resultOperation"][] = $numberOfRows['resault'];
+        $resultArray["resultExpression"][] = $numberOfRows['result_expression'];
+    }
+};
+
+$resultArray["operand1"] = join(',', $resultArray["operand1"]);
+$resultArray["operand2"] = join(',', $resultArray["operand2"]);
+$resultArray["operation"] = join(',', $resultArray["operation"]);
+$resultArray["resultOperation"] = join(',', $resultArray["resultOperation"]);
+$resultArray["resultExpression"] = join(',', $resultArray["resultExpression"]);
+
+
+echo json_encode($resultArray);
+//echo '<pre>';
+//print_r($resultArray);
+//echo '</pre>';
+
+
 
 ?>
 
