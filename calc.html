@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="calc.js"></script>
+</head>
+<body>
+<form action="">
+    <div>
+        <label> <input type="text" name="valueX" id="valueX"> </label>
+    </div>
+
+    <div>
+        <label>
+            <select id="selectOption" name="selectOption">
+                <option value="+">Сложение (+)</option>
+                <option value="-">Вычитание (-)</option>
+                <option value="*">Умножение (*)</option>
+                <option value=":">Деление (:)</option>
+            </select>
+        </label>
+    </div>
+
+    <div>
+        <label><input type="text" name="valueY" id="valueY"></label>
+    </div>
+
+    <div>
+        <button onclick="calculate ()">Вычислить</button>
+        <!--        <input type="submit" value="Вычислить" name="calcButton" onclick="">-->
+    </div>
+    </form>
+
+<div class="error">
+    Ошибка:
+</div>
+
+<div class="result">
+</div>
+
+
+<div class="lastResult">
+</div>
+
+</body>
+</html>
