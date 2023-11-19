@@ -24,11 +24,12 @@ function calculate() {
             let resultList = "";
 
             for (i = 0; i < jsonObject.resultExpression.length; i++) {
-                resultList = resultList + jsonObject.resultExpression[i] + "; "
+                resultList = resultList + jsonObject.resultExpression[i] + ";" + "<br>";
             }
             let resultField = document.querySelector(".lastResult");
-            resultField.innerHTML = "Последние результаты: " + jsonObject;
+            resultField.innerHTML = "Последние результаты: <br>" + resultList;
         })
+        .catch(err => alert(err));
 }
 
 
