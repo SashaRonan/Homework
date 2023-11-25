@@ -7,8 +7,9 @@ class Calculator
 
         $result = '';
         if (!empty($x) && !empty($y)) {
-            if ($operation == "add") {
+            if ($operation == "+") {
                 $result = $x + $y;
+                $operation = urldecode($operation);
             } elseif ($operation == "-") {
                 $result = $x - $y;
             } elseif ($operation == "*") {

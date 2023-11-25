@@ -9,6 +9,7 @@ class Expression extends Database
     function saveExpression($x, $operation, $y, $result)
     {
         $result_expression = $x . $operation . $y . "=" . $result;
+//        $escapedOperation = addslashes($operation);
         Database::query("INSERT INTO results (operand_1, `operation`, operand_2, resault, `result_expression`) VALUES ('$x', '$operation', '$y', '$result', '$result_expression')");
     }
 
