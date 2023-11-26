@@ -1,5 +1,7 @@
 <?php
 
+session_start();
+
 require_once ("classes/Calculator.php");
 require_once  ("classes/Expression.php");
 require_once ("classes/Database.php");
@@ -24,7 +26,13 @@ $result = $Calculator->calculate($x, $y, $operation);
 
 $expression->saveExpression($x, $operation, $y, $result);
 
+
 $resultArray = $expression->loadResults();
+
+$lastExpression = end($resultArray["resultExpression"]);
+
+
+    $_SESSION['lastExpression'] = $lastExpression;
 
 echo json_encode($resultArray);
 

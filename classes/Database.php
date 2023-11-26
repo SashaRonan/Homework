@@ -1,11 +1,12 @@
 <?php
+
 class Database
 {
     private static $connection;
 
     public static function connect()
     {
-        if (empty(self::$connection)){
+        if (empty(self::$connection)) {
             self::$connection = mysqli_connect('localhost', 'root', '', 'calc');
         }
     }
@@ -15,11 +16,18 @@ class Database
         return mysqli_query(self::$connection, $sqlString);
     }
 
-    public static function fetch ($query) {
+    public static function encodedOperationSymbol($operation)
+    {
+        return mysqli_real_escape_string(self::$connection, $operation);
+    }
+
+    public static function fetch($query)
+    {
         return mysqli_fetch_assoc($query);
     }
 
-    public static function fetcNumRows ($query) {
+    public static function fetcNumRows($query)
+    {
         return mysqli_num_rows($query);
     }
 }

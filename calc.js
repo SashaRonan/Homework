@@ -10,8 +10,6 @@ function calculate() {
     let selectOptionField = document.querySelector("#selectOption");
     let selectOption = selectOptionField.value;
 
-    // console.log(valueX, valueY, selectOption);
-
     fetch ("calc.php?valueX=" + valueX + "&selectOption=" + selectOption + "&valueY=" + valueY)
 
         .then (response => response.json())
@@ -27,7 +25,9 @@ function calculate() {
                 resultList = resultList + jsonObject.resultExpression[i] + ";" + "<br>";
             }
             let resultField = document.querySelector(".lastResult");
-            resultField.innerHTML = "Последние результаты: <br>" + resultList;
+            resultField.innerHTML = "<br>" + resultList;
+
+
         })
         .catch(err => alert(err));
 }

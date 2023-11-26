@@ -8,8 +8,12 @@ class Expression extends Database
     }
     function saveExpression($x, $operation, $y, $result)
     {
+        $operation = Database::encodedOperationSymbol($operation);
+        $result = Database::encodedOperationSymbol($result);
+
         $result_expression = $x . $operation . $y . "=" . $result;
-//        $escapedOperation = addslashes($operation);
+
+        $result_expression = Database::encodedOperationSymbol($result_expression);
         Database::query("INSERT INTO results (operand_1, `operation`, operand_2, resault, `result_expression`) VALUES ('$x', '$operation', '$y', '$result', '$result_expression')");
     }
 

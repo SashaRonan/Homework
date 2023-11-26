@@ -1,15 +1,17 @@
 <?php
 
-class Calculator
+require_once ("Database.php");
+class Calculator extends Database
 {
     function calculate($x, $y, $operation)
     {
 
         $result = '';
         if (!empty($x) && !empty($y)) {
-            if ($operation == "+") {
+            if ($operation == "add") {
                 $result = $x + $y;
-                $operation = urldecode($operation);
+//                $operation = urldecode($operation);
+                $operation = Database::encodedOperationSymbol($operation);
             } elseif ($operation == "-") {
                 $result = $x - $y;
             } elseif ($operation == "*") {
