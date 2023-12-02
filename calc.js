@@ -10,7 +10,7 @@ function calculate() {
     let selectOptionField = document.querySelector("#selectOption");
     let selectOption = selectOptionField.value;
 
-    fetch ("calc.php?valueX=" + valueX + "&selectOption=" + selectOption + "&valueY=" + valueY)
+    fetch ("calc.php?valueX=" + valueX + "&selectOption=" + encodeURIComponent(selectOption) + "&valueY=" + valueY)
 
         .then (response => response.json())
         .then(jsonObject => {
